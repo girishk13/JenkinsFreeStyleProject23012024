@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    environment {
+        // Adjust these paths based on your project structure
+        JAVA_HOME = tool 'Your_JDK_Tool_Name'
+        MAVEN_HOME = tool 'Your_Maven_Tool_Name'
+        PATH = "$MAVEN_HOME/bin:$JAVA_HOME/bin:$PATH"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Git checkout or SCM of your choice
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Maven build
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Maven test
+                sh 'mvn test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // You can add deployment steps here if needed
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up steps, if any
+        }
+        success {
+            // Actions to take on successful build
+        }
+        failure {
+            // Actions to take on build failure
+        }
+    }
+}
